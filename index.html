@@ -769,7 +769,7 @@
         <!-- Camera Screen -->
         <div id="cameraScreen" class="screen">
             <h2 class="text-center mb-4">Smile! 📸</h2>
-            <div class="progress-indicator" id="progressText">Photo 1 of <span id="totalPhotos">3</span></div>
+            <div class="progress-indicator" id="progressText">Photo 1 of <span id="totalPhotos">4</span></div>
             
             <div id="videoContainer">
                 <video id="video" autoplay playsinline></video>
@@ -1006,16 +1006,16 @@
             
             if (selectedLayout === 1) {
                 // Layout 1: 2x6 inches - 4 photos vertically (1652x4920)
-                padding = 80; // Original side padding restored
+                padding = 30; // Small side padding
                 topPadding = 50;
                 bottomSpace = 480;
-                photoGap = 5; // NO gap between photos
+                photoGap = 15; // Small gap between photos (like in your image)
             } else {
                 // Layout 2: 6x4 inches - small gaps between photos
                 padding = 30;
                 topPadding = 40;
-                bottomSpace = 250; // Increased for more text space
-                photoGap = 10; // Small gap between all photos
+                bottomSpace = 250;
+                photoGap = 10;
             }
             
             const availableHeight = canvas.height - topPadding - bottomSpace;
@@ -1032,8 +1032,8 @@
                 // Layout 2: 6x4 inches - 4 photos in 2x2 grid with small gaps
                 cols = 2;
                 rows = 2;
-                photoWidth = (canvas.width - (padding * 2) - photoGap) / 2; // Subtract horizontal gap
-                photoHeight = (availableHeight - photoGap) / 2; // Subtract vertical gap
+                photoWidth = (canvas.width - (padding * 2) - photoGap) / 2;
+                photoHeight = (availableHeight - photoGap) / 2;
             }
 
             // Load and draw photos
@@ -1059,8 +1059,8 @@
                                 y = topPadding + (row * (photoHeight + photoGap));
                             } else {
                                 // Layout 2: 2x2 grid - small gaps between all photos
-                                x = padding + (col * (photoWidth + photoGap)); // Gap between left and right
-                                y = topPadding + (row * (photoHeight + photoGap)); // Gap between top and bottom
+                                x = padding + (col * (photoWidth + photoGap));
+                                y = topPadding + (row * (photoHeight + photoGap));
                             }
 
                             // Draw photo - different modes for different layouts
@@ -1074,10 +1074,10 @@
                                 ctx.drawImage(img, x + offsetX, y + offsetY, scaledWidth, scaledHeight);
                             } else {
                                 // Layout 2: Cover mode (fill entire space completely, crop if needed)
-                                ctx.save(); // Save the current state
+                                ctx.save();
                                 ctx.beginPath();
-                                ctx.rect(x, y, photoWidth, photoHeight); // Create clipping rectangle
-                                ctx.clip(); // Clip to this rectangle
+                                ctx.rect(x, y, photoWidth, photoHeight);
+                                ctx.clip();
                                 
                                 const scale = Math.max(photoWidth / img.width, photoHeight / img.height);
                                 const scaledWidth = img.width * scale;
@@ -1086,7 +1086,7 @@
                                 const offsetY = (photoHeight - scaledHeight) / 2;
                                 ctx.drawImage(img, x + offsetX, y + offsetY, scaledWidth, scaledHeight);
                                 
-                                ctx.restore(); // Restore to remove clipping
+                                ctx.restore();
                             }
                         });
 
@@ -1157,5 +1157,4 @@
         }
     </script>
 </body>
-
 </html>
